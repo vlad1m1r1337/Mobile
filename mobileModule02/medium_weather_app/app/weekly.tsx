@@ -1,6 +1,10 @@
 import {StyleSheet, Text, View} from "react-native";
+import useLocation from "@/app/hooks/useLocation";
 
 export default function Weekly({geolocation}: {geolocation: string}) {
+    const {latitude, longitude, erroMsg} = useLocation();
+
+
     return (
         <View
             style={{
@@ -9,10 +13,15 @@ export default function Weekly({geolocation}: {geolocation: string}) {
                 alignItems: "center",
             }}
         >
-            <View style={styles.centerText} >
-                <Text style={styles.header}>Weekly</Text>
-                <Text style={styles.header}>{geolocation}</Text>
-            </View>
+            {erroMsg ?
+                <Text style={styles.errorText}>{erroMsg}</Text> :
+                (
+                    <>
+                        <Text style={styles.header}>Weekly</Text>
+                        <Text style={styles.header}>{latitude} {longitude}</Text>
+                    </>
+                )
+            }
         </View>
     );
 }
@@ -24,5 +33,11 @@ const styles = StyleSheet.create({
     centerText: {
         display: "flex",
         alignItems: "center",
+    },
+    errorText: {
+        paddingHorizontal:10,
+        paddingVertical:10,
+        fontSize: 25,
+        color: "#FF0000",
     }
 })

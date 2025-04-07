@@ -9,7 +9,7 @@ const useLocation = () => {
     const getUserLocation = async () => {
         let {status} = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
-            setErroMsg('Permission denied granted');
+            setErroMsg('Geolocation is not available, please enable it in tour App settings');
             return;
         }
 

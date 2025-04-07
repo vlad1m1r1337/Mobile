@@ -1,8 +1,12 @@
 import {StyleSheet, Text, View} from "react-native";
+import useLocation from "@/app/hooks/useLocation";
 
 
 export default function Index({geolocation}: {geolocation: string}) {
-  return (
+    const {latitude, longitude, erroMsg} = useLocation();
+
+
+    return (
     <View
       style={{
         flex: 1,
@@ -11,8 +15,15 @@ export default function Index({geolocation}: {geolocation: string}) {
       }}
     >
         <View style={styles.centerText}>
-            <Text style={styles.header}>Currently</Text>
-            <Text style={styles.header}>{geolocation}</Text>
+            {erroMsg ?
+                <Text style={styles.errorText}>{erroMsg}</Text> :
+                (
+                    <>
+                        <Text style={styles.header}>Currently</Text>
+                        <Text style={styles.header}>{latitude} {longitude}</Text>
+                    </>
+                )
+            }
         </View>
     </View>
   );
@@ -25,5 +36,11 @@ const styles = StyleSheet.create({
     centerText: {
         display: "flex",
         alignItems: "center",
+    },
+    errorText: {
+        paddingHorizontal:10,
+        paddingVertical:10,
+        fontSize: 25,
+        color: "#FF0000",
     }
 })

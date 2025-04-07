@@ -12,7 +12,6 @@ const Tab = createMaterialTopTabNavigator();
 export default function RootLayout() {
     const [geolocation, setGeolocation] = useState('');
     const {latitude, longitude, erroMsg} = useLocation();
-    console.log('myCoords', latitude, longitude);
   return (
     <>
         <GeolocationSearch setGeolocation={setGeolocation} />
