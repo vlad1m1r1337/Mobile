@@ -9,9 +9,9 @@ export default function Today({geolocation}: {geolocation: string}) {
                 alignItems: "center",
             }}
         >
-            <View>
-                <Text style={styles.header}>{geolocation}</Text>
+            <View style={styles.centerText}>
                 <Text  style={styles.header}>Today</Text>
+                <Text style={styles.header}>{geolocation}</Text>
             </View>
         </View>
     );
@@ -20,5 +20,9 @@ export default function Today({geolocation}: {geolocation: string}) {
 const styles = StyleSheet.create({
     header: {
         fontSize: 25,
+    },
+    centerText: {
+        display: "flex",
+        alignItems: "center",
     }
 })

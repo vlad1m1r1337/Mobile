@@ -1,9 +1,6 @@
 import {View, StyleSheet, Text, TouchableOpacity, useWindowDimensions, Dimensions, ScaledSize} from "react-native";
-import {useEffect, useState} from "react";
 
 export default function RootLayout() {
-    const { width, height } = useWindowDimensions();
-
     return (
     <View style={styles.container}>
       <Text style={styles.text} >A simple text</Text>

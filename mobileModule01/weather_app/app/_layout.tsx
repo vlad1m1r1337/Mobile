@@ -9,7 +9,7 @@ import {useState} from "react";
 const Tab = createMaterialTopTabNavigator();
 
 export default function RootLayout() {
-    const [geolocation, setGeolocation] = useState('1424')
+    const [geolocation, setGeolocation] = useState('')
   return (
     <>
         <GeolocationSearch setGeolocation={setGeolocation} />

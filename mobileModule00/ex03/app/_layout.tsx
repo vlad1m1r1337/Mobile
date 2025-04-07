@@ -6,9 +6,8 @@ import {cutOperators} from "@/app/cutOperators";
 export default function RootLayout() {
   const { height: screenHeight, width } = useWindowDimensions();
   const [calc, setCalc] = useState('0');
-  const [result, setResult] = useState('3+5');
+  const [result, setResult] = useState('0');
   const isLandscape = width > screenHeight;
-  console.log(calc);
   const styles = createStyles(screenHeight, isLandscape);
   const setNumber = (num: string) => {
     if(calc === '0' || calc === 'error') {
@@ -71,8 +70,9 @@ export default function RootLayout() {
               </View>
             </TouchableOpacity>
             <TouchableOpacity onPress={() =>{
-              setCalc('0');
-              setResult('0');
+              if(calc !== '0' && calc !== 'error') {
+                setCalc(calc.slice(0, -1));
+              }
             }}>
               <View style={styles.buttonBox}>
                 <Text style={[styles.buttons, styles.clear]} >C</Text>
