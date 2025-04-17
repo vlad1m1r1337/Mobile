@@ -1,10 +1,8 @@
 import {StyleSheet, Text, View} from "react-native";
 import useLocation from "@/app/hooks/useLocation";
 
-
-export default function Index({geolocation}: {geolocation: string}) {
+export default function Index() {
     const {latitude, longitude, erroMsg} = useLocation();
-
 
     return (
     <View

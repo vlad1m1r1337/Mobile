@@ -5,13 +5,16 @@ import Weekly from "@/app/weekly";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import {GeolocationSearch} from "@/app/geolocation-search";
-import {useState} from "react";
-import useLocation from "@/app/hooks/useLocation";
+import {useEffect, useState} from "react";
+import {color} from "@/app/constants";
+import {getWeather} from "@/app/requests";
 const Tab = createMaterialTopTabNavigator();
 
 export default function RootLayout() {
-    const [geolocation, setGeolocation] = useState('');
-    const {latitude, longitude, erroMsg} = useLocation();
+    const [, setGeolocation] = useState('');
+    useEffect(() => {
+        getWeather()
+    }, []);
   return (
     <>
         <GeolocationSearch setGeolocation={setGeolocation} />
@@ -34,63 +37,57 @@ export default function RootLayout() {
                 name="Index"
                 options={{
                     tabBarLabel: "Currently",
-                    tabBarInactiveTintColor: '#778899',
+                    tabBarInactiveTintColor: color.grayBackground,
                     tabBarActiveTintColor: '#000000',
                     tabBarIcon: ({ focused }: { focused: boolean }) => (
                         <MaterialCommunityIcons
                             name="calendar-account"
                             size={24}
-                            color={focused ? '#000000' : '#778899'}
+                            color={focused ? '#000000' : color.grayBackground}
                         />
                     ),
             }}
             >
                 {() => (
-                    <Index
-                        geolocation={geolocation}
-                    />
+                    <Index/>
                 )}
             </Tab.Screen>
             <Tab.Screen
                 name="MoreInfo"
                 options={{
                     tabBarLabel: "Today",
-                    tabBarInactiveTintColor: '#778899',
+                    tabBarInactiveTintColor: color.grayBackground,
                     tabBarActiveTintColor: '#000000',
                     tabBarIcon: ({ focused }: { focused: boolean }) => (
                         <MaterialCommunityIcons
                             name="calendar"
                             size={24}
-                            color={focused ? '#000000' : '#778899'}
+                            color={focused ? '#000000' : color.grayBackground}
                         />
                     ),
             }}
             >
                 {() => (
-                    <Today
-                        geolocation={geolocation}
-                    />
+                    <Today/>
                 )}
             </Tab.Screen>
             <Tab.Screen
                 name="Weekly"
                 options={{
                     tabBarLabel: "Weekly",
-                    tabBarInactiveTintColor: '#778899',
+                    tabBarInactiveTintColor: color.grayBackground,
                     tabBarActiveTintColor: '#000000',
                     tabBarIcon: ({ focused }: { focused: boolean }) => (
                         <AntDesign
                             name="calendar"
                             size={24}
-                            color={focused ? '#000000' : '#778899'}
+                            color={focused ? '#000000' : color.grayBackground}
                         />
                     ),
             }}
             >
                 {() => (
-                    <Weekly
-                        geolocation={geolocation}
-                    />
+                    <Weekly/>
                 )}
             </Tab.Screen>
         </Tab.Navigator>

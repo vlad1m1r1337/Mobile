@@ -18,6 +18,12 @@ const useLocation = () => {
             const { latitude, longitude } = coords;
             setLatitude(latitude);
             setLongitude(longitude);
+            let result = await Location.reverseGeocodeAsync({
+                latitude,
+                longitude,
+            });
+
+            // console.log('user location', result);
         }
     }
 

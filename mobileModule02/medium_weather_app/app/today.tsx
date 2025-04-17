@@ -1,10 +1,9 @@
 import {StyleSheet, Text, View} from "react-native";
 import useLocation from "@/app/hooks/useLocation";
 
-export default function Today({geolocation}: {geolocation: string}) {
+export default function Today() {
     const {latitude, longitude, erroMsg} = useLocation();
 
-    console.log(latitude, longitude, erroMsg);
     return (
         <View
             style={{

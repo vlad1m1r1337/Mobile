@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from "react-native";
 import useLocation from "@/app/hooks/useLocation";
 
-export default function Weekly({geolocation}: {geolocation: string}) {
+export default function Weekly() {
     const {latitude, longitude, erroMsg} = useLocation();
 
 
