@@ -1,10 +1,12 @@
 import {weatherDescriptions} from "@/app/constants";
 
 export const parseCurentInfo = (weatherData: any) => {
-    const { temperature2m: temperature, time } = weatherData.current;
-    const timestamp = time[0].toISOString();
-
-    const result = {temperature: temperature.toFixed(1), time: timestamp};
+    // const { temperature2m: temperature, time } = weatherData?.current;
+    const temperature = weatherData?.current?.temperature2m;
+    const windSpeed = weatherData?.current?.windSpeed10m;
+    console.log('wdd', weatherData);
+    if (!temperature || !windSpeed) {return {};}
+    const result = {temperature: temperature?.toFixed(1), windSpeed: windSpeed.toFixed(1)};
     return result;
 };
 

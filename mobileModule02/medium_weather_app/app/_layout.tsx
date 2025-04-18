@@ -13,19 +13,24 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function RootLayout() {
     const [, setGeolocation] = useState('');
-    const [, setLongitude] = useState<number | null>(null);
-    const [, setLatitude] = useState<number | null>(null);
-    const [, setErroMsg] = useState("");
+    const [ weatherData, setWeatherData] = useState({})
+    const [longitude, setLongitude] = useState<number | null>(null);
+    const [latitude, setLatitude] = useState<number | null>(null);
+    const [errorMsg, setErrorMsg] = useState("");
     const [dislocation, setDislocation] = useState({})
+    // console.log(weatherData)
     useEffect(() => {
-        getWeather()
-    }, []);
+        const getData = async () => {
+            const data = await getWeather({ lat: latitude, long: longitude });
+            setWeatherData(data);
+            console.log('data', data);
+        };
+        getData();
+    }, [latitude, longitude]);
 
-    useLocation({setLatitude, setLongitude, setErroMsg, setDislocation});
 
-    useEffect(() => {
-        console.log('dislocation updated:', dislocation);
-    }, [dislocation]);
+    useLocation({setLatitude, setLongitude, setErrorMsg, setDislocation});
+
     return (
         <>
             <GeolocationSearch setGeolocation={setGeolocation} />
@@ -59,8 +64,14 @@ export default function RootLayout() {
                         ),
                 }}
                 >
-                    {({setLatitude, setLongitude, latitude, longitude, errorMsg, dislocation}) => (
-                        <Index/>
+                    {() => (
+                        <Index
+                            dislocation={dislocation}
+                            latitude={latitude}
+                            longitude={longitude}
+                            errorMsg={errorMsg}
+                            weatherData={weatherData}
+                        />
                     )}
                 </Tab.Screen>
                 <Tab.Screen
@@ -78,8 +89,14 @@ export default function RootLayout() {
                         ),
                 }}
                 >
-                    {({setLatitude, setLongitude, latitude, longitude, errorMsg, dislocation}) => (
-                        <Today/>
+                    {() => (
+                        <Today
+                            dislocation={dislocation}
+                            latitude={latitude}
+                            longitude={longitude}
+                            errorMsg={errorMsg}
+                            weatherData={weatherData}
+                        />
                     )}
                 </Tab.Screen>
                 <Tab.Screen
@@ -97,8 +114,14 @@ export default function RootLayout() {
                         ),
                 }}
                 >
-                    {({setLatitude, setLongitude, latitude, longitude, errorMsg, dislocation}) => (
-                        <Weekly/>
+                    {() => (
+                        <Weekly
+                            dislocation={dislocation}
+                            latitude={latitude}
+                            longitude={longitude}
+                            errorMsg={errorMsg}
+                            weatherData={weatherData}
+                        />
                     )}
                 </Tab.Screen>
             </Tab.Navigator>

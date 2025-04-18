@@ -1,17 +1,19 @@
 import {StyleSheet, Text, View} from "react-native";
 import useLocation from "@/app/hooks/useLocation";
 import {useEffect, useMemo} from "react";
+import {parseCurentInfo} from "@/app/utils/parseInfo";
 
 export default function Index({
     latitude,
     longitude,
     errorMsg,
-    dislocation
+    dislocation,
+    weatherData,
 }) {
-    useEffect(() => {
-        console.log('dislocation updated: index', dislocation);
-    }, [dislocation]);
-    const dis = useMemo(() => dislocation, [dislocation]);
+    const data = useMemo(() => parseCurentInfo(weatherData), [weatherData]);
+
+
+    console.log(data)
     return (
     <View
       style={{
@@ -25,9 +27,17 @@ export default function Index({
                 <Text style={styles.errorText}>{errorMsg}</Text> :
                 (
                     <>
-                        <Text style={styles.header}>Currently</Text>
-                        { dis && <Text>{dis.city} {dis.country} {dis.region}</Text>}
-                        <Text style={styles.header}>{latitude} {longitude}</Text>
+                        {dislocation &&
+                            <View style={styles.info}>
+                                <Text>{dislocation.city}</Text>
+                                <Text>{dislocation.region}</Text>
+                                <Text>{dislocation.country}</Text>
+
+                                <Text>{data.temperature} °C</Text>
+                                <Text>{data.windSpeed} km/h</Text>
+                            </View>
+                        }
+                        {/*<Text style={styles.header}>{latitude} {longitude}</Text>*/}
                     </>
                 )
             }
@@ -49,5 +59,9 @@ const styles = StyleSheet.create({
         paddingVertical:10,
         fontSize: 25,
         color: "#FF0000",
+    },
+    info: {
+        display: "flex",
+        flexDirection: "column",
     }
 })

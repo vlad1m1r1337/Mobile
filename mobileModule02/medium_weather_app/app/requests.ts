@@ -7,10 +7,13 @@ type getWeatherParams = {
     longitude: number;
 }
 
-export const getWeather = async () => {
+export const getWeather = async ({lat, long}) => {
+    if (!lat || !long) {
+        return {}
+    }
     const params = {
-        latitude: 35.1056,
-        longitude: 33.4198,
+        latitude: lat,
+        longitude: long,
         hourly: ["temperature_2m", "windspeed_10m"],
         daily: ["temperature_2m_min", "temperature_2m_max", "weathercode"],
         current: ["temperature_2m", "windspeed_10m", "weathercode"],
@@ -56,9 +59,11 @@ export const getWeather = async () => {
             weatherCode: daily.variables(2)!.valuesArray()!,
         },
     };
-    parseCurentInfo(weatherData);
-    parseTodayInfo(weatherData);
-    parseWeekInfo(weatherData);
+    console.log('wData', weatherData);
+    // parseCurentInfo(weatherData);
+    // parseTodayInfo(weatherData);
+    // parseWeekInfo(weatherData);
+    return weatherData;
 };
 
 type WeatherApiResponse = {

@@ -4,14 +4,14 @@ import * as Location from "expo-location";
 const useLocation = ({
     setLatitude,
     setLongitude,
-    setErroMsg,
+    setErrorMsg,
     setDislocation,
 }) => {
 
     const getUserLocation = async () => {
         let {status} = await Location.requestForegroundPermissionsAsync();
         if (status !== "granted") {
-            setErroMsg('Geolocation is not available, please enable it in tour App settings');
+            setErrorMsg('Geolocation is not available, please enable it in tour App settings');
             return;
         }
 
@@ -29,7 +29,7 @@ const useLocation = ({
                 'country': result[0]?.country || '',
                 'region':  result[0]?.region || ''
             })
-            console.log('city', result[0].city, 'country', result[0].country, 'region', result[0].region);
+            // console.log('city', result[0].city, 'country', result[0].country, 'region', result[0].region);
         }
     }
 

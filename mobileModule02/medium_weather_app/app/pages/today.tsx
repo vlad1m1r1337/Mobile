@@ -6,11 +6,10 @@ export default function Today({
     latitude,
     longitude,
     errorMsg,
-    dislocation
+    dislocation,
+    weatherData
 }) {
-    useEffect(() => {
-        setTimeout(() => console.log("dislocation delay today", dislocation), 5000)
-    }, []);
+
     return (
         <View
             style={{
@@ -24,7 +23,13 @@ export default function Today({
                 (
                     <>
                         <Text style={styles.header}>Today</Text>
-                        { dislocation && <Text>{dislocation.city} {dislocation.country} {dislocation.region}</Text>}
+                        {dislocation &&
+                            <View style={styles.info}>
+                                <Text>{dislocation.city}</Text>
+                                <Text>{dislocation.country}</Text>
+                                <Text>{dislocation.region}</Text>
+                            </View>
+                        }
                         <Text style={styles.header}>{`${latitude}  ${longitude}`}</Text>
                     </>
                 )
@@ -46,5 +51,9 @@ const styles = StyleSheet.create({
         paddingVertical:10,
         fontSize: 25,
         color: "#FF0000",
+    },
+    info: {
+        display: "flex",
+        flexDirection: "column",
     }
 })

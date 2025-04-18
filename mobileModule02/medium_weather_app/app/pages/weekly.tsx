@@ -7,7 +7,7 @@ export default function Weekly({
     errorMsg,
     dislocation
 }) {
-    console.log('dislocation weekly', dislocation)
+
     return (
         <View
             style={{
@@ -21,7 +21,13 @@ export default function Weekly({
                 (
                     <>
                         <Text style={styles.header}>Weekly</Text>
-                        { dislocation && <Text>{dislocation.city} {dislocation.country} {dislocation.region}</Text>}
+                        {dislocation &&
+                            <View style={styles.info}>
+                                <Text>{dislocation.city}</Text>
+                                <Text>{dislocation.country}</Text>
+                                <Text>{dislocation.region}</Text>
+                            </View>
+                        }
                         <Text style={styles.header}>{latitude} {longitude}</Text>
                     </>
                 )
@@ -43,5 +49,9 @@ const styles = StyleSheet.create({
         paddingVertical:10,
         fontSize: 25,
         color: "#FF0000",
+    },
+    info: {
+        display: "flex",
+        flexDirection: "column",
     }
 })
