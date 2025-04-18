@@ -1,9 +1,13 @@
 import {StyleSheet, Text, View} from "react-native";
 import useLocation from "@/app/hooks/useLocation";
 
-export default function Today() {
-    const {latitude, longitude, erroMsg} = useLocation();
-
+export default function Weekly({
+    latitude,
+    longitude,
+    errorMsg,
+    dislocation
+}) {
+    console.log('dislocation weekly', dislocation)
     return (
         <View
             style={{
@@ -12,12 +16,13 @@ export default function Today() {
                 alignItems: "center",
             }}
         >
-            {erroMsg ?
-                <Text style={styles.errorText}>{erroMsg}</Text> :
+            {errorMsg ?
+                <Text style={styles.errorText}>{errorMsg}</Text> :
                 (
                     <>
-                        <Text style={styles.header}>Today</Text>
-                        <Text style={styles.header}>{`${latitude}  ${longitude}`}</Text>
+                        <Text style={styles.header}>Weekly</Text>
+                        { dislocation && <Text>{dislocation.city} {dislocation.country} {dislocation.region}</Text>}
+                        <Text style={styles.header}>{latitude} {longitude}</Text>
                     </>
                 )
             }

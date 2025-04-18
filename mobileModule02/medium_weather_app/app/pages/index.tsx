@@ -1,9 +1,17 @@
 import {StyleSheet, Text, View} from "react-native";
 import useLocation from "@/app/hooks/useLocation";
+import {useEffect, useMemo} from "react";
 
-export default function Index() {
-    const {latitude, longitude, erroMsg} = useLocation();
-
+export default function Index({
+    latitude,
+    longitude,
+    errorMsg,
+    dislocation
+}) {
+    useEffect(() => {
+        console.log('dislocation updated: index', dislocation);
+    }, [dislocation]);
+    const dis = useMemo(() => dislocation, [dislocation]);
     return (
     <View
       style={{
@@ -13,11 +21,12 @@ export default function Index() {
       }}
     >
         <View style={styles.centerText}>
-            {erroMsg ?
-                <Text style={styles.errorText}>{erroMsg}</Text> :
+            {errorMsg ?
+                <Text style={styles.errorText}>{errorMsg}</Text> :
                 (
                     <>
                         <Text style={styles.header}>Currently</Text>
+                        { dis && <Text>{dis.city} {dis.country} {dis.region}</Text>}
                         <Text style={styles.header}>{latitude} {longitude}</Text>
                     </>
                 )

@@ -1,10 +1,12 @@
 import {useEffect, useState} from "react";
 import * as Location from "expo-location";
 
-const useLocation = () => {
-    const [erroMsg, setErroMsg] = useState("");
-    const [longitude, setLongitude] = useState<number | null>(null);
-    const [latitude, setLatitude] = useState<number | null>(null);
+const useLocation = ({
+    setLatitude,
+    setLongitude,
+    setErroMsg,
+    setDislocation,
+}) => {
 
     const getUserLocation = async () => {
         let {status} = await Location.requestForegroundPermissionsAsync();
@@ -22,15 +24,18 @@ const useLocation = () => {
                 latitude,
                 longitude,
             });
-
-            // console.log('user location', result);
+            setDislocation({
+                'city': result[0]?.city || '',
+                'country': result[0]?.country || '',
+                'region':  result[0]?.region || ''
+            })
+            console.log('city', result[0].city, 'country', result[0].country, 'region', result[0].region);
         }
     }
 
     useEffect(() => {
         getUserLocation();
     }, [])
-    return {latitude, longitude, erroMsg}
 }
 
 export default useLocation
