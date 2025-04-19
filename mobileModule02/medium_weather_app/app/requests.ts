@@ -57,12 +57,11 @@ export const getWeather = async ({lat, long}) => {
             temperature2m: daily.variables(0)!.valuesArray()!,
             windSpeed10mMax: daily.variables(0)!.valuesArray()!,
             weatherCode: daily.variables(2)!.valuesArray()!,
+            temperature2mMax: daily.variables(0)!.valuesArray()!,
+            temperature2mMin: daily.variables(1)!.valuesArray()!,
         },
     };
-    console.log('wData', weatherData);
-    // parseCurentInfo(weatherData);
-    // parseTodayInfo(weatherData);
-    // parseWeekInfo(weatherData);
+    console.log(weatherData?.daily)
     return weatherData;
 };
 

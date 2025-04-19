@@ -12,8 +12,6 @@ export default function Index({
 }) {
     const data = useMemo(() => parseCurentInfo(weatherData), [weatherData]);
 
-
-    console.log(data)
     return (
     <View
       style={{
@@ -35,6 +33,7 @@ export default function Index({
 
                                 <Text>{data.temperature} °C</Text>
                                 <Text>{data.windSpeed} km/h</Text>
+
                             </View>
                         }
                         {/*<Text style={styles.header}>{latitude} {longitude}</Text>*/}

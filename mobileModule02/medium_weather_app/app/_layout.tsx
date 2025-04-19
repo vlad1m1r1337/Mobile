@@ -13,17 +13,15 @@ const Tab = createMaterialTopTabNavigator();
 
 export default function RootLayout() {
     const [, setGeolocation] = useState('');
-    const [ weatherData, setWeatherData] = useState({})
+    const [ weatherData, setWeatherData] = useState(null);
     const [longitude, setLongitude] = useState<number | null>(null);
     const [latitude, setLatitude] = useState<number | null>(null);
     const [errorMsg, setErrorMsg] = useState("");
-    const [dislocation, setDislocation] = useState({})
-    // console.log(weatherData)
+    const [dislocation, setDislocation] = useState({});
     useEffect(() => {
         const getData = async () => {
             const data = await getWeather({ lat: latitude, long: longitude });
             setWeatherData(data);
-            console.log('data', data);
         };
         getData();
     }, [latitude, longitude]);
@@ -33,7 +31,13 @@ export default function RootLayout() {
 
     return (
         <>
-            <GeolocationSearch setGeolocation={setGeolocation} />
+            <GeolocationSearch
+                setGeolocation={setGeolocation}
+                setLongitude={setLongitude}
+                setLatitude={setLatitude}
+                setDislocation={setDislocation}
+                setErrorMsg={setErrorMsg}
+            />
             <Tab.Navigator
                 initialRouteName="Index"
                 screenOptions={{

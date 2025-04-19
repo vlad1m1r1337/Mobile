@@ -6,6 +6,7 @@ const useLocation = ({
     setLongitude,
     setErrorMsg,
     setDislocation,
+    trigger
 }) => {
 
     const getUserLocation = async () => {
@@ -29,13 +30,12 @@ const useLocation = ({
                 'country': result[0]?.country || '',
                 'region':  result[0]?.region || ''
             })
-            // console.log('city', result[0].city, 'country', result[0].country, 'region', result[0].region);
         }
     }
 
     useEffect(() => {
         getUserLocation();
-    }, [])
+    }, [trigger])
 }
 
 export default useLocation
