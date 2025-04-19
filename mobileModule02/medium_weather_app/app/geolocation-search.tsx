@@ -1,18 +1,25 @@
-import { View, StyleSheet, TextInput, Text} from "react-native";
+import {View, StyleSheet, TextInput, Text, TouchableOpacity} from "react-native";
 import {useEffect, useState} from "react";
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {color} from "@/app/constants";
 import {getCity} from "@/app/requests";
+import useLocation from "@/app/hooks/useLocation";
 
 type GeolocationSearchParams = {
     setGeolocation: (geolocation: string) => void;
 }
 
-export const GeolocationSearch = ({setGeolocation}: GeolocationSearchParams) => {
+export const GeolocationSearch = ({
+    setGeolocation,
+    setLatitude,
+    setLongitude,
+    setDislocation,
+    setErrorMsg
+}: GeolocationSearchParams) => {
     const [search, setSearch] = useState('');
     const [hints, setHints] = useState([]);
-
+    const [trigger, setTrigger] = useState(false);
     useEffect(() => {
         const getHints = async () => {
             const res = await getCity(search) || [];
@@ -20,7 +27,7 @@ export const GeolocationSearch = ({setGeolocation}: GeolocationSearchParams) => 
         }
         getHints();
     }, [search]);
-
+    useLocation({setLatitude, setLongitude, setErrorMsg, setDislocation, trigger})
     return (
         <>
             <View style={styles.container}>
@@ -31,17 +38,29 @@ export const GeolocationSearch = ({setGeolocation}: GeolocationSearchParams) => 
                     value={search}
                     placeholder="Search Location..."
                 />
-                <FontAwesome onPress={() => setGeolocation(search)} name="location-arrow" size={30} color="white" />
+                <FontAwesome onPress={() => setTrigger(!trigger) } name="location-arrow" size={30} color="white" />
 
             </View>
             <View style={styles.dropdownList} >
                     {hints.map((hint, i) => (
-                        <View style={styles.suggestionLine}>
-                            <FontAwesome name="building" size={24} color="black" />
-                            <Text>{hint?.name}</Text>
-                            <Text>{hint?.admin1}</Text>
-                            <Text>{hint?.country}</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => {
+                            console.log('press')
+                            setSearch(hint?.name);
+                            setLongitude(hint?.longitude);
+                            setLatitude(hint?.latitude);
+                            setDislocation({
+                                'city': hint.name,
+                                'country': hint.country,
+                                'region': hint.admin1
+                            })
+                        }}>
+                            <View style={styles.suggestionLine}>
+                                <FontAwesome name="building" size={24} color="black" />
+                                <Text>{hint?.name}</Text>
+                                <Text>{hint?.admin1}</Text>
+                                <Text>{hint?.country}</Text>
+                            </View>
+                        </TouchableOpacity>
                     ))}
             </View>
         </>
