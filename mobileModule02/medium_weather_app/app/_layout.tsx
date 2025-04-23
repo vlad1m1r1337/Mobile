@@ -20,12 +20,11 @@ export default function RootLayout() {
     const [dislocation, setDislocation] = useState({});
     useEffect(() => {
         const getData = async () => {
-            const data = await getWeather({ lat: latitude, long: longitude });
+            const data = await getWeather({ lat: latitude, long: longitude, setErrorMsg });
             setWeatherData(data);
         };
         getData();
     }, [latitude, longitude]);
-
 
     useLocation({setLatitude, setLongitude, setErrorMsg, setDislocation});
 

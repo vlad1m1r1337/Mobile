@@ -8,6 +8,10 @@ import useLocation from "@/app/hooks/useLocation";
 
 type GeolocationSearchParams = {
     setGeolocation: (geolocation: string) => void;
+    setLatitude: (latitude: number) => void;
+    setLongitude: (longitude: number) => void;
+    setErrorMsg: (msg: string) => void;
+    setDislocation: (dislocation: string) => void;
 }
 
 export const GeolocationSearch = ({
@@ -22,7 +26,7 @@ export const GeolocationSearch = ({
     const [trigger, setTrigger] = useState(false);
     useEffect(() => {
         const getHints = async () => {
-            const res = await getCity(search) || [];
+            const res = await getCity(search, setErrorMsg) || [];
             setHints(res);
         }
         getHints();
@@ -41,11 +45,11 @@ export const GeolocationSearch = ({
                 <FontAwesome onPress={() => setTrigger(!trigger) } name="location-arrow" size={30} color="white" />
 
             </View>
-            <View style={styles.dropdownList} >
+            <View style={styles.dropdownList}>
                     {hints.map((hint, i) => (
-                        <TouchableOpacity onPress={() => {
+                        <TouchableOpacity key={Date.now().toString() + Math.random().toString()} onPress={() => {
                             console.log('press')
-                            setSearch(hint?.name);
+                            setSearch('');
                             setLongitude(hint?.longitude);
                             setLatitude(hint?.latitude);
                             setDislocation({

@@ -7,7 +7,7 @@ type getWeatherParams = {
     longitude: number;
 }
 
-export const getWeather = async ({lat, long}) => {
+export const getWeather = async ({lat, long, setErrorMsg}) => {
     if (!lat || !long) {
         return {}
     }
@@ -21,48 +21,53 @@ export const getWeather = async ({lat, long}) => {
         timezone: "Europe/Moscow",
     };
     const url = "https://api.open-meteo.com/v1/forecast";
-    const responses = await fetchWeatherApi(url, params);
-    const response = responses[0];
+    try {
+        const responses = await fetchWeatherApi(url, params);
 
-    const utcOffsetSeconds = response.utcOffsetSeconds();
-    const timezone = response.timezone();
-    const timezoneAbbreviation = response.timezoneAbbreviation();
-    const latitude = response.latitude();
-    const longitude = response.longitude();
-    const hourly = response.hourly()!;
-    const daily = response.daily()!;
-    const current = response.current()!;
+        const response = responses[0];
 
-    const weatherData = {
-        current: {
-            time: [...Array((Number(current.timeEnd()) - Number(current.time())) / current.interval())].map(
-                (_, i) => new Date((Number(current.time()) + i * current.interval() + utcOffsetSeconds) * 1000)
-            ),
-            temperature2m: current.variables(1)!.value(),
-            windSpeed10m: current.variables(0)!.value(),
-            weatherCode: current.variables(2)!.value(),
-        },
-        hourly: {
-            time: [...Array((Number(hourly.timeEnd()) - Number(hourly.time())) / hourly.interval())].map(
-                (_, i) => new Date((Number(hourly.time()) + i * hourly.interval() + utcOffsetSeconds) * 1000)
-            ),
-            temperature2m: hourly.variables(0)!.valuesArray()!,
-            windSpeed10m: hourly.variables(1)!.valuesArray()!,
-            weatherCode: hourly.variables(2)!.valuesArray()!,
-        },
-        daily: {
-            time: [...Array((Number(daily.timeEnd()) - Number(daily.time())) / daily.interval())].map(
-                (_, i) => new Date((Number(daily.time()) + i * daily.interval() + utcOffsetSeconds) * 1000)
-            ),
-            temperature2m: daily.variables(0)!.valuesArray()!,
-            windSpeed10mMax: daily.variables(0)!.valuesArray()!,
-            weatherCode: daily.variables(2)!.valuesArray()!,
-            temperature2mMax: daily.variables(0)!.valuesArray()!,
-            temperature2mMin: daily.variables(1)!.valuesArray()!,
-        },
-    };
-    console.log(weatherData?.daily)
-    return weatherData;
+        const utcOffsetSeconds = response.utcOffsetSeconds();
+        const timezone = response.timezone();
+        const timezoneAbbreviation = response.timezoneAbbreviation();
+        const latitude = response.latitude();
+        const longitude = response.longitude();
+        const hourly = response.hourly()!;
+        const daily = response.daily()!;
+        const current = response.current()!;
+
+        const weatherData = {
+            current: {
+                time: [...Array((Number(current.timeEnd()) - Number(current.time())) / current.interval())].map(
+                    (_, i) => new Date((Number(current.time()) + i * current.interval() + utcOffsetSeconds) * 1000)
+                ),
+                temperature2m: current.variables(1)!.value(),
+                windSpeed10m: current.variables(0)!.value(),
+                weatherCode: current.variables(2)!.value(),
+            },
+            hourly: {
+                time: [...Array((Number(hourly.timeEnd()) - Number(hourly.time())) / hourly.interval())].map(
+                    (_, i) => new Date((Number(hourly.time()) + i * hourly.interval() + utcOffsetSeconds) * 1000)
+                ),
+                temperature2m: hourly.variables(0)!.valuesArray()!,
+                windSpeed10m: hourly.variables(1)!.valuesArray()!,
+                weatherCode: hourly.variables(2)!.valuesArray()!,
+            },
+            daily: {
+                time: [...Array((Number(daily.timeEnd()) - Number(daily.time())) / daily.interval())].map(
+                    (_, i) => new Date((Number(daily.time()) + i * daily.interval() + utcOffsetSeconds) * 1000)
+                ),
+                temperature2m: daily.variables(0)!.valuesArray()!,
+                windSpeed10mMax: daily.variables(0)!.valuesArray()!,
+                weatherCode: daily.variables(2)!.valuesArray()!,
+                temperature2mMax: daily.variables(0)!.valuesArray()!,
+                temperature2mMin: daily.variables(1)!.valuesArray()!,
+            },
+        };
+        return weatherData;
+    } catch (e) {
+        setErrorMsg("Error occured");
+        return {};
+    }
 };
 
 type WeatherApiResponse = {
@@ -73,12 +78,12 @@ type WeatherApiResponse = {
 
 type WeatherApiResponseArray = WeatherApiResponse[] | {};
 
-export const getCity = async (city: string) => {
+export const getCity = async (city: string, setErrorMsg) => {
     try {
         const response = await axios.get<any>(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=6&language=en&format=json`);
         return response.data.results as WeatherApiResponse[];
     }
     catch (error) {
-        console.log(error);
+        setErrorMsg("Error occured");
     }
 }

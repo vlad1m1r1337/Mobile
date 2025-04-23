@@ -11,7 +11,9 @@ const useLocation = ({
 
     const getUserLocation = async () => {
         let {status} = await Location.requestForegroundPermissionsAsync();
+        console.log(status);
         if (status !== "granted") {
+            console.log("Ашибачка");
             setErrorMsg('Geolocation is not available, please enable it in tour App settings');
             return;
         }
@@ -34,6 +36,7 @@ const useLocation = ({
     }
 
     useEffect(() => {
+        console.log("Ge");
         getUserLocation();
     }, [trigger])
 }

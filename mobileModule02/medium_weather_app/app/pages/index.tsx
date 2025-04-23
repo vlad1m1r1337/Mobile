@@ -11,7 +11,6 @@ export default function Index({
     weatherData,
 }) {
     const data = useMemo(() => parseCurentInfo(weatherData), [weatherData]);
-
     return (
     <ScrollView style={{height: 400}}>
         <View
@@ -33,10 +32,8 @@ export default function Index({
                                     <Text>{dislocation.country}</Text>
                                     <Text>{data.temperature} °C</Text>
                                     <Text>{data.windSpeed} km/h</Text>
-
                                 </View>
                             }
-                            {/*<Text style={styles.header}>{latitude} {longitude}</Text>*/}
                         </>
                     )
                 }
