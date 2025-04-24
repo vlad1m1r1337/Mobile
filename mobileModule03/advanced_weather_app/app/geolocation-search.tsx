@@ -1,4 +1,4 @@
-import {View, StyleSheet, TextInput, Text, TouchableOpacity} from "react-native";
+import {View, StyleSheet, TextInput, Text, TouchableOpacity, useWindowDimensions} from "react-native";
 import {useEffect, useState} from "react";
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -32,7 +32,9 @@ export const GeolocationSearch = ({
         }
         getHints();
     }, [search]);
-    useLocation({setLatitude, setLongitude, setErrorMsg, setDislocation, trigger})
+    useLocation({setLatitude, setLongitude, setErrorMsg, setDislocation, trigger});
+
+    const { height, width } = useWindowDimensions();
     return (
         <>
             <View style={styles.container}>
@@ -49,7 +51,6 @@ export const GeolocationSearch = ({
             <View style={styles.dropdownList}>
                     {hints.map((hint, i) => (
                         <TouchableOpacity key={Date.now().toString() + Math.random().toString()} onPress={() => {
-                            console.log('press')
                             setSearch('');
                             setLongitude(hint?.longitude);
                             setLatitude(hint?.latitude);
@@ -65,6 +66,7 @@ export const GeolocationSearch = ({
                                 <Text>{hint?.admin1}</Text>
                                 <Text>{hint?.country}</Text>
                             </View>
+                            <View/>
                         </TouchableOpacity>
                     ))}
             </View>
@@ -96,6 +98,13 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         gap: 10,
+        paddingHorizontal:10,
+        paddingVertical:10,
+    },
+    horizontalLine: {
+        width: '80%',
+        height: 1,
+        backgroundColor: 'red',
     }
 })
 
