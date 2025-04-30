@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal:20,
         height: 70,
-        backgroundColor: 'grey',
+        backgroundColor: 'transparent',
+        zIndex: 10
     },
     input: {
         width: '80%',
