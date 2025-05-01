@@ -1,5 +1,5 @@
-import {ScrollView, StyleSheet, Text, View} from "react-native";
-import {parseCurentInfo, parseTodayInfo} from "@/app/utils/parseInfo";
+import {ScrollView, StyleSheet, Text, useWindowDimensions, View} from "react-native";
+import {parseChartInotherInfo, parseCurentInfo, parseTodayInfo} from "@/app/utils/parseInfo";
 import {useMemo} from "react";
 import {
     LineChart,
@@ -9,6 +9,7 @@ import {
     ContributionGraph,
     StackedBarChart
 } from "react-native-chart-kit";
+import ChartScreen from "@/app/chart-screen";
 
 export default function Today({
     errorMsg,
@@ -16,10 +17,11 @@ export default function Today({
     weatherData
 }) {
     const data = useMemo(() => parseTodayInfo(weatherData), [weatherData]);
+    const {width, height} = useWindowDimensions();
     return (
             <View
                 style={{
-                    height: 200, // фиксированная высота
+                    height: height - 200,
                     justifyContent: "center",
                     alignItems: "center",
                 }}
@@ -34,16 +36,16 @@ export default function Today({
                                         <Text>{dislocation.city}</Text>
                                         <Text>{dislocation.country}</Text>
                                         <Text>{dislocation.region}</Text>
-
-                                        {/*{data && Object.keys(data).length && data.map(function (el) {*/}
-                                        {/*    return (*/}
-                                        {/*        <View style={styles.today_info} key={Date.now().toString() + Math.random().toString()}>*/}
-                                        {/*            <Text>{el.time}</Text>*/}
-                                        {/*            <Text>{el.temperature} °C</Text>*/}
-                                        {/*            <Text>{el.windSpeed} km/h</Text>*/}
-                                        {/*        </View>*/}
-                                        {/*    )*/}
-                                        {/*})}*/}
+                                        <ChartScreen data={data}/>
+                                        {data && Object.keys(data).length && data.map(function (el) {
+                                            return (
+                                                <View style={styles.today_info} key={Date.now().toString() + Math.random().toString()}>
+                                                    <Text>{el.time}</Text>
+                                                    <Text>{el.temperature} °C</Text>
+                                                    <Text>{el.windSpeed} km/h</Text>
+                                                </View>
+                                            )
+                                        })}
                                     </View>
                                 }
                             </>

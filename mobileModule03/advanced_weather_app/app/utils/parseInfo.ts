@@ -41,4 +41,17 @@ export const parseWeekInfo = (weatherData: any) => {
     return result;
 };
 
+export const parseChartInotherInfo = (data: any) => {
+    if (!data) {
+        return { first: [], second: [] };
 
+    }
+    if(data.length === 7){
+        return { first: [], second: [] };
+    }
+    else {
+        const res = data.map(item => ({'value': Number(item.temperature), 'dataPointText': item.time}));
+        const labels = data.map(item => item.time);
+        return {first : res, second: [], labels : labels};
+    }
+}

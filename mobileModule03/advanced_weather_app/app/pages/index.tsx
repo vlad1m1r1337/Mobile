@@ -17,7 +17,7 @@ export default function Index({
     return (
         <View
             style={{
-                height: 200,
+                height: height - 200,
                 justifyContent: "center",
                 alignItems: "center",
             }}

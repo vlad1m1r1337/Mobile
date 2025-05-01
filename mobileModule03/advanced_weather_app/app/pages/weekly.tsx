@@ -8,6 +8,7 @@ export default function Weekly({
     weatherData
 }) {
     const data = useMemo(() => parseWeekInfo(weatherData), [weatherData]);
+    console.log('weekly', data);
     return (
         <View
             style={{
