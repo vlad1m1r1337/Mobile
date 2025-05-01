@@ -38,7 +38,7 @@ export default function RootLayout() {
     return (
         <>
             <ImageBackground
-                source={{ uri: 'https://media.newyorker.com/photos/59095c67ebe912338a37455d/master/pass/Stokes-Hello-Kitty2.jpg' }}
+                source={require('../assets/images/background.png')} // Использaуем require()
                 style={StyleSheet.absoluteFill}
                 resizeMode="cover"
             >
@@ -58,6 +58,9 @@ export default function RootLayout() {
                             left: 0,
                             right: 0,
                             zIndex: 10,
+                            backgroundColor: 'transparent',
+                        },
+                        sceneStyle: {
                             backgroundColor: 'transparent',
                         },
                         tabBarInactiveTintColor: 'red',
@@ -81,7 +84,6 @@ export default function RootLayout() {
                                 />
                             ),
                         }}
-                        style={{ backgroundColor: 'transparent' }}
                     >
                         {() => (
                             <Index

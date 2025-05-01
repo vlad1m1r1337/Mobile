@@ -1,6 +1,14 @@
 import {ScrollView, StyleSheet, Text, View} from "react-native";
 import {parseCurentInfo, parseTodayInfo} from "@/app/utils/parseInfo";
 import {useMemo} from "react";
+import {
+    LineChart,
+    BarChart,
+    PieChart,
+    ProgressChart,
+    ContributionGraph,
+    StackedBarChart
+} from "react-native-chart-kit";
 
 export default function Today({
     errorMsg,
@@ -8,40 +16,39 @@ export default function Today({
     weatherData
 }) {
     const data = useMemo(() => parseTodayInfo(weatherData), [weatherData]);
-
     return (
             <View
                 style={{
-                    flex: 1,
+                    height: 200, // фиксированная высота
                     justifyContent: "center",
                     alignItems: "center",
                 }}
             >
                 <ScrollView>
-                {errorMsg ?
-                    <Text style={styles.errorText}>{errorMsg}</Text> :
-                    (
-                        <>
-                            {dislocation &&
-                                <View style={styles.info}>
-                                    <Text>{dislocation.city}</Text>
-                                    <Text>{dislocation.country}</Text>
-                                    <Text>{dislocation.region}</Text>
+                    {errorMsg ?
+                        <Text style={styles.errorText}>{errorMsg}</Text> :
+                        (
+                            <>
+                                {dislocation &&
+                                    <View style={styles.info}>
+                                        <Text>{dislocation.city}</Text>
+                                        <Text>{dislocation.country}</Text>
+                                        <Text>{dislocation.region}</Text>
 
-                                    {data && Object.keys(data).length && data.map(function (el) {
-                                        return (
-                                            <View style={styles.today_info} key={Date.now().toString() + Math.random().toString()}>
-                                                <Text>{el.time}</Text>
-                                                <Text>{el.temperature} °C</Text>
-                                                <Text>{el.windSpeed} km/h</Text>
-                                            </View>
-                                        )
-                                    })}
-                                </View>
-                            }
-                        </>
-                    )
-                }
+                                        {/*{data && Object.keys(data).length && data.map(function (el) {*/}
+                                        {/*    return (*/}
+                                        {/*        <View style={styles.today_info} key={Date.now().toString() + Math.random().toString()}>*/}
+                                        {/*            <Text>{el.time}</Text>*/}
+                                        {/*            <Text>{el.temperature} °C</Text>*/}
+                                        {/*            <Text>{el.windSpeed} km/h</Text>*/}
+                                        {/*        </View>*/}
+                                        {/*    )*/}
+                                        {/*})}*/}
+                                    </View>
+                                }
+                            </>
+                        )
+                    }
                 </ScrollView>
             </View>
     );

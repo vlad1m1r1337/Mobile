@@ -1,4 +1,4 @@
-import {View, StyleSheet, TextInput, Text, TouchableOpacity, useWindowDimensions} from "react-native";
+import {View, StyleSheet, TextInput, Text, TouchableOpacity, useWindowDimensions, ScrollView} from "react-native";
 import {useEffect, useState} from "react";
 import EvilIcons from '@expo/vector-icons/EvilIcons';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -49,6 +49,7 @@ export const GeolocationSearch = ({
 
             </View>
             <View style={styles.dropdownList}>
+                <ScrollView>
                     {hints.map((hint, i) => (
                         <TouchableOpacity key={Date.now().toString() + Math.random().toString()} onPress={() => {
                             setSearch('');
@@ -69,6 +70,7 @@ export const GeolocationSearch = ({
                             <View/>
                         </TouchableOpacity>
                     ))}
+                </ScrollView>
             </View>
         </>
     )
@@ -83,7 +85,7 @@ const styles = StyleSheet.create({
         paddingHorizontal:20,
         height: 70,
         backgroundColor: 'transparent',
-        zIndex: 10
+        zIndex: 20
     },
     input: {
         width: '80%',
@@ -91,9 +93,15 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
     dropdownList: {
+        position: 'absolute',
+        top: 50,
+        left: 15,
+        zIndex: 200,
         display: 'flex',
+        height: 200,
         flexDirection: 'column',
         color: color.grayBackground,
+        backgroundColor: 'white',
     },
     suggestionLine: {
         display: 'flex',

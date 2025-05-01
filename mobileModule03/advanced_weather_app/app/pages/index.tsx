@@ -2,6 +2,8 @@ import {Image, ScrollView, StyleSheet, Text, useWindowDimensions, View} from "re
 import useLocation from "@/app/hooks/useLocation";
 import {useEffect, useMemo} from "react";
 import {parseCurentInfo} from "@/app/utils/parseInfo";
+import {weatherIcons} from "@/app/constants";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function Index({
     errorMsg,
@@ -9,46 +11,51 @@ export default function Index({
     weatherData,
 }) {
     const data = useMemo(() => parseCurentInfo(weatherData), [weatherData]);
-    const image = {uri: 'https://png.pngtree.com/background/20210711/original/pngtree-hand-drawn-blue-sky-white-clouds-weather-forecast-illustration-background-picture-image_1137685.jpg'};
     const {width, height} = useWindowDimensions();
+    console.log('data code', data?.code);
 
     return (
-    <>
-        <ScrollView style={{height: 400, backgroundColor: 'transparent'}}>
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                <View style={styles.centerText}>
-                    {errorMsg ?
-                        <Text style={styles.errorText}>{errorMsg}</Text> :
-                        (
-                            <>
-                                {dislocation &&
-                                    <View style={styles.info}>
-                                        <Text>{dislocation.city}</Text>
-                                        <Text>{dislocation.region}</Text>
-                                        <Text>{dislocation.country}</Text>
-                                        <Text>{data.temperature} °C</Text>
-                                        <Text>{data.windSpeed} km/h</Text>
-                                    </View>
-                                }
-                            </>
-                        )
-                    }
-                </View>
-            </View>
-        </ScrollView>
-    </>
+        <View
+            style={{
+                height: 200,
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
+            <ScrollView>
+                {errorMsg ?
+                    <Text style={styles.errorText}>{errorMsg}</Text> :
+                    (
+                        <>
+                            {dislocation &&
+                                <View style={styles.info}>
+                                    <Text style={styles.font}>{dislocation.city}</Text>
+                                    <Text style={styles.font}>{dislocation.region}, {dislocation.country}</Text>
+                                    <Text style={[styles.temperatureFont, styles.temperatureColor]}>{data.temperature} °C</Text>
+                                   <View style={styles.weatherDescription}>
+                                       <Text style={styles.font}>{data.description}</Text>
+                                       <MaterialCommunityIcons name={weatherIcons[data.code]} size={64  } color="#000" />
+                                   </View>
+                                    <Text style={styles.font}>{data.windSpeed} km/h</Text>
+                                </View>
+                            }
+                        </>
+                    )
+                }
+            </ScrollView>
+        </View>
   );
 }
 
 const styles = StyleSheet.create({
-    header: {
+    font: {
         fontSize: 25,
+    },
+    temperatureColor: {
+        color: "#FFA500",
+    },
+    temperatureFont: {
+      fontSize: 40,
     },
     centerText: {
         display: "flex",
@@ -58,10 +65,17 @@ const styles = StyleSheet.create({
         paddingHorizontal:10,
         paddingVertical:10,
         fontSize: 25,
-        color: "#FF0000",
     },
     info: {
         display: "flex",
         flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 10
+    },
+    weatherDescription: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: "center",
     }
 })

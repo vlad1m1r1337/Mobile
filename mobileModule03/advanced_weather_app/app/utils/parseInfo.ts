@@ -3,8 +3,16 @@ import {weatherDescriptions} from "@/app/constants";
 export const parseCurentInfo = (weatherData: any) => {
     const temperature = weatherData?.current?.temperature2m;
     const windSpeed = weatherData?.current?.windSpeed10m;
+    const code = weatherData?.current?.weatherCode;
+    console.log('code', code);
+        console.log(weatherData?.current);
     if (!temperature || !windSpeed) {return {};}
-    const result = {temperature: temperature?.toFixed(1), windSpeed: windSpeed.toFixed(1)};
+    const result = {
+        temperature: temperature?.toFixed(1),
+        windSpeed: windSpeed.toFixed(1),
+        description: weatherDescriptions[code],
+        code: code,
+    };
     return result;
 };
 
