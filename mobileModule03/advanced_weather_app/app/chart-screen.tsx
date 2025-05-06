@@ -21,30 +21,30 @@ const ChartScreen = ({data}) => {
     ];
     const xLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May'];
     const {first, second, labels} = parseChartInotherInfo(data);
-    console.log('first', first, 'lineData', lineData, 'labels', labels);
+    console.log('first: ', first, 'second: ', second);
     return (
-        <View style={{ paddingHorizontal: 20, paddingBottom: 20 }}>
+        <View style={{ paddingHorizontal: 20, paddingBottom: 20}}>
             <LineChart
-                data={first}
-                data2={second}
+                data={second}
+                data2={first}
                 height={250}
-                xAxisLabelTexts={labels}
+                // xAxisLabelTexts={labels}
                 showVerticalLines
                 hideDataPoints
                 rulesType={'solid'}
                 verticalLinesStyle={{ strokeDasharray: '' }}
-                spacing={44}
+                spacing={11}
                 initialSpacing={20}
                 color1="skyblue"
                 color2="red"
                 textColor1="green"
-                dataPointsHeight={6}
-                dataPointsWidth={6}
+                dataPointsHeight={1}
+                dataPointsWidth={1}
                 dataPointsColor1="skyblue"
                 dataPointsColor2="red"
                 textShiftY={-2}
                 textShiftX={-5}
-                textFontSize={13}
+                textFontSize={1}
             />
         </View>
     );

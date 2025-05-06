@@ -45,7 +45,6 @@ const useLocation = ({
     }
 
     useEffect(() => {
-        console.log("Ge");
         getUserLocation();
     }, [trigger])
 }

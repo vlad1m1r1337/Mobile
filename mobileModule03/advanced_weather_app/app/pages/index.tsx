@@ -12,7 +12,6 @@ export default function Index({
 }) {
     const data = useMemo(() => parseCurentInfo(weatherData), [weatherData]);
     const {width, height} = useWindowDimensions();
-    console.log('data code', data?.code);
 
     return (
         <View
@@ -34,7 +33,7 @@ export default function Index({
                                     <Text style={[styles.temperatureFont, styles.temperatureColor]}>{data.temperature} °C</Text>
                                    <View style={styles.weatherDescription}>
                                        <Text style={styles.font}>{data.description}</Text>
-                                       <MaterialCommunityIcons name={weatherIcons[data.code]} size={64  } color="#000" />
+                                       <MaterialCommunityIcons name={weatherIcons[data.code]} size={64} color="#000" />
                                    </View>
                                     <Text style={styles.font}>{data.windSpeed} km/h</Text>
                                 </View>

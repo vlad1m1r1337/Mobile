@@ -20,9 +20,9 @@ export const getWeather = async ({lat, long, setErrorMsg}: getWeatherType) => {
     const params = {
         latitude: lat,
         longitude: long,
-        hourly: ["temperature_2m", "windspeed_10m"],
-        daily: ["temperature_2m_min", "temperature_2m_max", "weathercode"],
-        current: ["temperature_2m", "windspeed_10m", "weathercode"],
+        hourly: ["temperature_2m", "weather_code", "wind_speed_10m"],
+        current: ["temperature_2m", "wind_speed_10m", "weather_code"],
+        daily: ["weather_code", "temperature_2m_max", "temperature_2m_min", "wind_speed_10m_max"],
         wind_speed_unit: "kmh",
         timezone: "Europe/Moscow",
     };
@@ -43,11 +43,9 @@ export const getWeather = async ({lat, long, setErrorMsg}: getWeatherType) => {
 
         const weatherData = {
             current: {
-                time: [...Array((Number(current.timeEnd()) - Number(current.time())) / current.interval())].map(
-                    (_, i) => new Date((Number(current.time()) + i * current.interval() + utcOffsetSeconds) * 1000)
-                ),
-                temperature2m: current.variables(1)!.value(),
-                windSpeed10m: current.variables(0)!.value(),
+                time: new Date((Number(current.time()) + utcOffsetSeconds) * 1000),
+                temperature2m: current.variables(0)!.value(),
+                windSpeed10m: current.variables(1)!.value(),
                 weatherCode: current.variables(2)!.value(),
             },
             hourly: {
@@ -55,20 +53,20 @@ export const getWeather = async ({lat, long, setErrorMsg}: getWeatherType) => {
                     (_, i) => new Date((Number(hourly.time()) + i * hourly.interval() + utcOffsetSeconds) * 1000)
                 ),
                 temperature2m: hourly.variables(0)!.valuesArray()!,
-                windSpeed10m: hourly.variables(1)!.valuesArray()!,
-                weatherCode: hourly.variables(2)!.valuesArray()!,
+                weatherCode: hourly.variables(1)!.valuesArray()!,
+                windSpeed10m: hourly.variables(2)!.valuesArray()!,
             },
             daily: {
                 time: [...Array((Number(daily.timeEnd()) - Number(daily.time())) / daily.interval())].map(
                     (_, i) => new Date((Number(daily.time()) + i * daily.interval() + utcOffsetSeconds) * 1000)
                 ),
-                temperature2m: daily.variables(0)!.valuesArray()!,
-                windSpeed10mMax: daily.variables(0)!.valuesArray()!,
-                weatherCode: daily.variables(2)!.valuesArray()!,
-                temperature2mMax: daily.variables(0)!.valuesArray()!,
-                temperature2mMin: daily.variables(1)!.valuesArray()!,
+                weatherCode: daily.variables(0)!.valuesArray()!,
+                temperature2mMax: daily.variables(1)!.valuesArray()!,
+                temperature2mMin: daily.variables(2)!.valuesArray()!,
+                windSpeed10mMax: daily.variables(3)!.valuesArray()!,
             },
         };
+        console.log('WD', weatherData);
         return weatherData;
     } catch (e) {
         setErrorMsg("Error occured");

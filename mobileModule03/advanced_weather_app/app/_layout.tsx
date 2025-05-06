@@ -9,7 +9,7 @@ import {useEffect, useState} from "react";
 import {color} from "@/app/constants";
 import {getWeather} from "@/app/requests";
 import useLocation from "@/app/hooks/useLocation";
-import {View, StyleSheet, Dimensions, ImageBackground, Image, useWindowDimensions, Text} from "react-native";
+import { StyleSheet, ImageBackground, useWindowDimensions } from "react-native";
 const Tab = createMaterialTopTabNavigator();
 
 export interface DislocatoinType {
@@ -151,14 +151,3 @@ export default function RootLayout() {
         </>
     );
 }
-
-const styles = StyleSheet.create({
-
-});
-
-
-/*
-                <View>
-                    <Text>lol</Text>
-                </View>
- */

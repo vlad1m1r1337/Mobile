@@ -1,15 +1,9 @@
 import {ScrollView, StyleSheet, Text, useWindowDimensions, View} from "react-native";
 import {parseChartInotherInfo, parseCurentInfo, parseTodayInfo} from "@/app/utils/parseInfo";
 import {useMemo} from "react";
-import {
-    LineChart,
-    BarChart,
-    PieChart,
-    ProgressChart,
-    ContributionGraph,
-    StackedBarChart
-} from "react-native-chart-kit";
 import ChartScreen from "@/app/chart-screen";
+import {weatherIcons} from "@/app/constants";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 export default function Today({
     errorMsg,
@@ -17,7 +11,7 @@ export default function Today({
     weatherData
 }) {
     const data = useMemo(() => parseTodayInfo(weatherData), [weatherData]);
-    const {width, height} = useWindowDimensions();
+    const { width, height } = useWindowDimensions();
     return (
             <View
                 style={{
@@ -33,19 +27,23 @@ export default function Today({
                             <>
                                 {dislocation &&
                                     <View style={styles.info}>
-                                        <Text>{dislocation.city}</Text>
-                                        <Text>{dislocation.country}</Text>
-                                        <Text>{dislocation.region}</Text>
+                                        <Text style={styles.font}>{dislocation.city}</Text>
+                                        <Text style={styles.font}>{dislocation.region}, {dislocation.country}</Text>
                                         <ChartScreen data={data}/>
-                                        {data && Object.keys(data).length && data.map(function (el) {
-                                            return (
-                                                <View style={styles.today_info} key={Date.now().toString() + Math.random().toString()}>
-                                                    <Text>{el.time}</Text>
-                                                    <Text>{el.temperature} °C</Text>
-                                                    <Text>{el.windSpeed} km/h</Text>
-                                                </View>
-                                            )
-                                        })}
+                                        <View style={{ width: '90%'}}>
+                                                <ScrollView horizontal={true}>
+                                                        {data && Object.keys(data).length && data.map(function (el) {
+                                                            return (
+                                                                <View style={styles.today_info} key={Date.now().toString() + Math.random().toString()}>
+                                                                    <Text style={{fontSize: 20}}>{el.time}</Text>
+                                                                    <MaterialCommunityIcons name={weatherIcons[el.code]} size={64} color="#000" />
+                                                                    <Text style={{fontSize: 20}}>{el.temperature} °C</Text>
+                                                                    <Text style={{fontSize: 20}}>{el.windSpeed} km/h</Text>
+                                                                </View>
+                                                            )
+                                                        })}
+                                                    </ScrollView>
+                                        </View>
                                     </View>
                                 }
                             </>
@@ -57,7 +55,7 @@ export default function Today({
 }
 
 const styles = StyleSheet.create({
-    header: {
+    font: {
         fontSize: 25,
     },
     centerText: {
@@ -73,10 +71,23 @@ const styles = StyleSheet.create({
     info: {
         display: "flex",
         flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
     },
     today_info: {
         display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        gap: 10,
+        paddingHorizontal:10,
+        paddingVertical:10,
+    },
+    info_slider: {
+        display: "flex",
         flexDirection: "row",
-        gap: 10
+        gap: 30,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
     }
 })
