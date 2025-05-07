@@ -66,7 +66,6 @@ export const getWeather = async ({lat, long, setErrorMsg}: getWeatherType) => {
                 windSpeed10mMax: daily.variables(3)!.valuesArray()!,
             },
         };
-        console.log('WD', weatherData);
         return weatherData;
     } catch (e) {
         setErrorMsg("Error occured");
@@ -80,7 +79,7 @@ type WeatherApiResponse = {
     country?: string;
 }
 
-export const getCity = async (city: string, setErrorMsg: (msg: string) => void) => {
+    export const getCity = async (city: string, setErrorMsg: (msg: string) => void) => {
     try {
         const response = await axios.get<any>(`https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=6&language=en&format=json`);
         return response.data.results as WeatherApiResponse[];

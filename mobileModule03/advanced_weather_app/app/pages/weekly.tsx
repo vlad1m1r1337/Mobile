@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, ScrollView} from "react-native";
+import {StyleSheet, Text, View, ScrollView, useWindowDimensions} from "react-native";
 import {useMemo} from "react";
 import {parseWeekInfo} from "@/app/utils/parseInfo";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -11,11 +11,12 @@ export default function Weekly({
     weatherData
 }) {
     const data = useMemo(() => parseWeekInfo(weatherData), [weatherData]);
-    console.log(data)
+    const { width, height } = useWindowDimensions();
+
     return (
         <View
             style={{
-                flex: 1,
+                height: height - 180,
                 justifyContent: "center",
                 alignItems: "center",
             }}
@@ -27,10 +28,9 @@ export default function Weekly({
                     <>
                         {dislocation &&
                             <View style={styles.info}>
-                                <Text>{dislocation.city}</Text>
-                                <Text>{dislocation.country}</Text>
-                                <Text>{dislocation.region}</Text>
-                                <ChartScreen data={data}/>
+                                <Text style={styles.font}>{dislocation.city}</Text>
+                                <Text style={styles.font}>{dislocation.region}, {dislocation.country}</Text>
+                                 <ChartScreen data={data} spacing={40}/>
 
                                 <View style={{ width: '90%'}}>
                                     <ScrollView horizontal={true}>
@@ -58,6 +58,9 @@ export default function Weekly({
 
 const styles = StyleSheet.create({
     header: {
+        fontSize: 25,
+    },
+    font: {
         fontSize: 25,
     },
     centerText: {

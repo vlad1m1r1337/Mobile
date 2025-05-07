@@ -30,7 +30,6 @@ export const parseTodayInfo = (weatherData: any) => {
 
 export const parseWeekInfo = (weatherData: any) => {
     if (!weatherData || Object.keys(weatherData).length === 0) { return null }
-    console.log('pwI', weatherData.daily.time);
     const result = Array.from(weatherData?.daily?.weatherCode).map(function(value, i){
         const day = weatherData.daily.time[i].getDate().toString().padStart(2, '0');
         const month = (weatherData.daily.time[i].getMonth() + 1).toString().padStart(2, '0');
@@ -58,6 +57,6 @@ export const parseChartInotherInfo = (data: any) => {
     else {
         const res = data.map(item => ({'value': Number(item.temperature), 'dataPointText': item.time}));
         const labels = data.map(item => item.time);
-        return {first : res, second: [], labels,};
+        return {first : [], second: res, labels,};
     }
 }

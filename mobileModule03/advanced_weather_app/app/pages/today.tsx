@@ -15,7 +15,7 @@ export default function Today({
     return (
             <View
                 style={{
-                    height: height - 200,
+                    height: height - 180,
                     justifyContent: "center",
                     alignItems: "center",
                 }}
@@ -29,7 +29,7 @@ export default function Today({
                                     <View style={styles.info}>
                                         <Text style={styles.font}>{dislocation.city}</Text>
                                         <Text style={styles.font}>{dislocation.region}, {dislocation.country}</Text>
-                                        <ChartScreen data={data}/>
+                                        <ChartScreen data={data} spacing={11}/>
                                         <View style={{ width: '90%'}}>
                                                 <ScrollView horizontal={true}>
                                                         {data && Object.keys(data).length && data.map(function (el) {
