@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "10051491922",
+    "project_id": "diary-1131d",
+    "storage_bucket": "diary-1131d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:10051491922:android:966e02b3f28871d197e78b",
+        "android_client_info": {
+          "package_name": "diary.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "10051491922-poge5315dmutkgar92vfqpfel6bvb29h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "diary.android",
+            "certificate_hash": "949a6ad4a2ce9f67247ffff000596438b72c0277"
+          }
+        },
+        {
+          "client_id": "10051491922-t4lmhldqh9302t6tq60bctj68gfjb7v3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBgLdKk-ZjRCPH0UwZ_500xT_FAM8tlcKM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "10051491922-t4lmhldqh9302t6tq60bctj68gfjb7v3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
